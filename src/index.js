@@ -79,14 +79,16 @@ function closeLipaLaterModal() {
   document.querySelector('.lipa-later-checkout__overlay').remove();
 }
 
-window.addEventListener(
-  'message',
-  (event) => {
-    if (event.origin === 'http://localhost:3000') {
-      closeLipaLaterModal();
-      return;
-    }
-    console.error(event.origin, ' is an invalid origin');
-  },
-  false
-);
+if (typeof window !== 'undefined') {
+  window.addEventListener(
+    'message',
+    (event) => {
+      if (event.origin === 'http://localhost:3000') {
+        closeLipaLaterModal();
+        return;
+      }
+      console.error(event.origin, ' is an invalid origin');
+    },
+    false
+  );
+}
