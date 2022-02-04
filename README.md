@@ -95,11 +95,11 @@ const lipalater = require('lipa-later-checkout-js')
 
 ### Above example will render the pages below:
 
-![alt checkout button](https://app.lipalater.com/IMAGES/checkout_button.jpg)
+![alt checkout button](https://app.lipalater.com/IMAGES/checkout_button.png)
 
 ### on button click
 
-![alt LipaLater modal](https://app.lipalater.com/IMAGES/checkout_page.jpg)
+![alt LipaLater modal](https://app.lipalater.com/IMAGES/checkout_page.png)
 
 ### For those that prefer to receive the payment status through callbacks(onFail, onSuccess), we have provision for this:
 
