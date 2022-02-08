@@ -1,47 +1,50 @@
 const REQUIRED_KEYS = [
-  'delivery_option',
-  'facility_plan',
-  'item_brand',
-  'item_code',
-  'item_decription',
-  'item_type',
-  'item_value',
-  'preferred_option',
-  'store_key',
+  "delivery_option",
+  "facility_plan",
+  "item_brand",
+  "item_code",
+  "item_decription",
+  "item_type",
+  "item_value",
+  "preferred_option",
+  "store_key",
 ];
 function createOverlay() {
-  const overlay = document.createElement('div');
-  overlay.className = 'lipa-later-checkout__overlay';
-  overlay.style.position = 'fixed';
-  overlay.style.width = '100%';
-  overlay.style.height = '100%';
-  overlay.style.top = '0';
-  overlay.style.left = '0';
-  overlay.style.right = '0';
-  overlay.style.bottom = '0';
-  overlay.style.backgroundColor = '#f0f4f8';
+  const overlay = document.createElement("div");
+  overlay.className = "lipa-later-checkout__overlay";
+  overlay.style.position = "fixed";
+  overlay.style.width = "100%";
+  overlay.style.height = "100%";
+  overlay.style.top = "0";
+  overlay.style.left = "0";
+  overlay.style.right = "0";
+  overlay.style.bottom = "0";
+  overlay.style.backgroundColor = "#f0f4f8";
   return overlay;
 }
 
 function createInput(name, value) {
-  const input = document.createElement('input');
-  input.type = 'hidden';
+  const input = document.createElement("input");
+  input.type = "hidden";
   input.name = name;
   input.value = value;
   return input;
 }
 
-function postData(itemDetails, api_key) {
+function postData(itemDetails, api_key, country) {
   const items = itemDetails.items;
-  const form = document.createElement('form');
-  form.id = 'lipa-later-item-data';
-  form.method = 'post';
-  form.target = 'lipa-later-checkout';
-  form.action = 'http://localhost:3000';
-  const orderId = createInput('order_id', itemDetails.order_id);
-  const apiKey = createInput('api_key', api_key);
+  const form = document.createElement("form");
+  form.id = "lipa-later-item-data";
+  form.method = "post";
+  form.target = "lipa-later-checkout";
+  form.action = "http://localhost:3000";
+  const orderId = createInput("order_id", itemDetails.order_id);
+  const apiKey = createInput("api_key", api_key);
+  const countryCode = createInput("country_code", country);
+
   form.appendChild(orderId);
   form.appendChild(apiKey);
+  form.appendChild(countryCode);
   items.map((item, index) => {
     for (const [key, value] of Object.entries(item)) {
       const input = createInput(key + (index + 1), value);
@@ -53,11 +56,11 @@ function postData(itemDetails, api_key) {
 }
 
 function createIframe() {
-  const iFrame = document.createElement('iframe');
-  iFrame.id = 'lipa-later-checkout';
-  iFrame.name = 'lipa-later-checkout';
-  iFrame.width = '100%';
-  iFrame.height = '100%';
+  const iFrame = document.createElement("iframe");
+  iFrame.id = "lipa-later-checkout";
+  iFrame.name = "lipa-later-checkout";
+  iFrame.width = "100%";
+  iFrame.height = "100%";
   return iFrame;
 }
 
@@ -72,14 +75,23 @@ function isMissing(property) {
   return false;
 }
 
+const validCountries = ["ng", "ke", "ug", "rw"];
+
 export function openModal(data) {
-  const { orderDetails, api_key, onFail, onSuccess } = data;
+  const { orderDetails, api_key, country, onFail, onSuccess } = data;
+  console.log("the data collected incoming", orderDetails, api_key, country);
 
   if (isMissing(api_key)) {
-    throw 'api_key missing. Please provide an api_key';
+    throw "api_key missing. Please provide an api_key";
   }
   if (isMissing(orderDetails)) {
-    throw 'orderDetails missing. Please provide the orderDetails object';
+    throw "orderDetails missing. Please provide the orderDetails object";
+  }
+  if (isMissing(country)) {
+    throw "country is missing. Please provide the country in the format: 'ng, ke, rw, ug' ";
+  }
+  if (!validCountries.includes(country)) {
+    throw "Please provide the country in the format: 'ng, ke, rw, ug' ";
   }
 
   orderDetails.items.map((item) => {
@@ -96,30 +108,30 @@ export function openModal(data) {
   // const closeButton = createCloseButton(overlay);
   const iFrame = createIframe();
   overlay.appendChild(iFrame);
-  const scriptTags = document.getElementsByTagName('script');
+  const scriptTags = document.getElementsByTagName("script");
   const lastScriptTag = scriptTags[scriptTags.length - 1];
   lastScriptTag.parentNode.insertBefore(overlay, lastScriptTag.nextSibling);
   //   onFail('failed');
   //   onSuccess('success');
 
-  postData(orderDetails, api_key);
+  postData(orderDetails, api_key, country);
   // append iframe, open the web page.
   // open the web page
 }
 
 function closeLipaLaterModal() {
-  document.querySelector('.lipa-later-checkout__overlay').remove();
+  document.querySelector(".lipa-later-checkout__overlay").remove();
 }
 
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   window.addEventListener(
-    'message',
+    "message",
     (event) => {
-      if (event.origin === 'http://localhost:3000') {
+      if (event.origin === "http://localhost:3000") {
         closeLipaLaterModal();
         return;
       }
-      console.error(event.origin, ' is an invalid origin');
+      console.error(event.origin, " is an invalid origin");
     },
     false
   );
