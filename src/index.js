@@ -32,6 +32,11 @@ function createInput(name, value) {
 }
 
 function postData(itemDetails, api_key) {
+  console.log(
+    itemDetails,
+    api_key,
+    "the item details passed into it and api key"
+  );
   const items = itemDetails.items;
   const form = document.createElement("form");
   form.id = "lipa-later-item-data";
