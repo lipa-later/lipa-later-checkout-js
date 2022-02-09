@@ -169,7 +169,7 @@ function postData(itemDetails, api_key, country) {
   form.id = "lipa-later-item-data";
   form.method = "post";
   form.target = "lipa-later-checkout";
-  form.action = "http://localhost:3000";
+  form.action = "https://develop.d1euvomf008lqs.amplifyapp.com";
   const orderId = createInput("order_id", itemDetails.order_id);
   const apiKey = createInput("api_key", api_key);
   const countryCode = createInput("country_code", country);
