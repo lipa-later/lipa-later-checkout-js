@@ -259,7 +259,7 @@ if (typeof window !== "undefined") {
   window.addEventListener(
     "message",
     (event) => {
-      if (event.origin === "http://localhost:3000") {
+      if (event.origin === "https://develop.d1euvomf008lqs.amplifyapp.com") {
         closeLipaLaterModal();
         return;
       }
