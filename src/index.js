@@ -141,6 +141,10 @@ const REQUIRED_KEYS = [
   "preferred_option",
   "store_key",
 ];
+
+const ORIGIN = "https://develop.d1euvomf008lqs.amplifyapp.com"
+const URL = ORIGIN;
+
 function createOverlay() {
   const overlay = document.createElement("div");
   overlay.className = "lipa-later-checkout__overlay";
@@ -169,7 +173,7 @@ function postData(itemDetails, api_key, country) {
   form.id = "lipa-later-item-data";
   form.method = "post";
   form.target = "lipa-later-checkout";
-  form.action = "https://develop.d1euvomf008lqs.amplifyapp.com";
+  form.action = URL;
   const orderId = createInput("order_id", itemDetails.order_id);
   const apiKey = createInput("api_key", api_key);
   const countryCode = createInput("country_code", country);
@@ -259,7 +263,8 @@ if (typeof window !== "undefined") {
   window.addEventListener(
     "message",
     (event) => {
-      if (event.origin === "https://develop.d1euvomf008lqs.amplifyapp.com") {
+      console.log("Received message event" , event);
+      if (event.origin === ORIGIN ) {
         closeLipaLaterModal();
         return;
       }
