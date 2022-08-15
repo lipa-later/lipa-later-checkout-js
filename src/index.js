@@ -253,23 +253,39 @@ export function openModal(data) {
   postData(orderDetails, api_key, country);
   // append iframe, open the web page.
   // open the web page
+
+  var messageEventListener;
+  messageEventListener =  function( event ){
+    console.log("Received message event" , event);
+    if (event.origin !== ORIGIN ) {
+      console.error(event.origin, " is an invalid origin");
+      return;
+    }
+
+    closeLipaLaterModal();
+    window.removeEventListener("message", messageEventListener ,false)
+
+    const evdata = event.data;
+    if(typeof evdata === 'object'){
+      if(!evdata.success){
+
+        if(typeof onFail === 'function'){
+          onFail(evdata.errorMessage)
+        }
+      }
+      else {
+          if(typeof onSuccess === 'function'){
+            onSuccess(evdata.message)
+          }
+      }
+    }
+  };
+
+  if (typeof window !== "undefined") {
+    window.addEventListener("message", messageEventListener ,false);
+  }
 }
 
 function closeLipaLaterModal() {
   document.querySelector(".lipa-later-checkout__overlay").remove();
-}
-
-if (typeof window !== "undefined") {
-  window.addEventListener(
-    "message",
-    (event) => {
-      console.log("Received message event" , event);
-      if (event.origin === ORIGIN ) {
-        closeLipaLaterModal();
-        return;
-      }
-      console.error(event.origin, " is an invalid origin");
-    },
-    false
-  );
 }
