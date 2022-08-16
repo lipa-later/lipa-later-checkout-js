@@ -189,6 +189,7 @@ function postData(itemDetails, api_key, country) {
   });
   document.body.appendChild(form);
   form.submit();
+  form.parentNode.removeChild(form);
 }
 
 function createIframe() {
