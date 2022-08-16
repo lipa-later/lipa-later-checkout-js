@@ -271,12 +271,20 @@ export function openModal(data) {
       if(!evdata.success){
 
         if(typeof onFail === 'function'){
-          onFail(evdata.errorMessage)
+          onFail(evdata.errorMessage);
+        }
+
+        if(typeof orderDetails.cancel_url === "string" && orderDetails.cancel_url.trim() !== ""){
+          document.location = orderDetails.cancel_url;
         }
       }
       else {
           if(typeof onSuccess === 'function'){
-            onSuccess(evdata.message)
+            onSuccess(evdata.message);
+          }
+
+          if(typeof orderDetails.success_url === "string" && orderDetails.success_url.trim() !== ""){
+            document.location = orderDetails.success_url;
           }
       }
     }
