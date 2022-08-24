@@ -142,8 +142,8 @@ const REQUIRED_KEYS = [
   "store_key",
 ];
 
-const ORIGIN = "https://develop.d1euvomf008lqs.amplifyapp.com"
-const URL = ORIGIN;
+const URL = "https://develop.d1euvomf008lqs.amplifyapp.com"
+const ORIGIN = URL;
 
 function createOverlay() {
   const overlay = document.createElement("div");
@@ -258,7 +258,7 @@ export function openModal(data) {
   var messageEventListener;
   messageEventListener =  function( event ){
     console.log("Received message event" , event);
-    if (event.origin !== ORIGIN ) {
+    if (event.origin !== ORIGIN && (data.origin === undefined || data.origin !== event.origin)) {
       console.error(event.origin, " is an invalid origin");
       return;
     }
