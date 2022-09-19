@@ -225,10 +225,10 @@ export function openModal(data) {
     throw "orderDetails missing. Please provide the orderDetails object";
   }
   if (isMissing(country)) {
-    throw "country is missing. Please provide the country in the format: 'ng, ke, rw, ug' ";
+    throw "country is missing. Please provide the country in the format: '" + validCountries.join(',') + "' ";
   }
-  if (!validCountries.includes(country)) {
-    throw "Please provide the country in the format: 'ng, ke, rw, ug' ";
+  if (!validCountries.includes(country.toString().toLowerCase())) {
+    throw "Please provide the country in the format: '" + validCountries.join(',') + "' ";
   }
 
   orderDetails.items.map((item) => {
