@@ -142,7 +142,7 @@ const REQUIRED_KEYS = [
   "store_key",
 ];
 
-const URL = "https://develop.d1euvomf008lqs.amplifyapp.com"
+const URL = "https://checkout.lipalater.com"
 const ORIGIN = URL;
 
 function createOverlay() {
