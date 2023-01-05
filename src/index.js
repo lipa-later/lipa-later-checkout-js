@@ -142,7 +142,7 @@ const REQUIRED_KEYS = [
   "store_key",
 ];
 
-const URL = "https://checkout.lipalater.com"
+const URL = process.env.BASE_URL
 const ORIGIN = URL;
 
 function createOverlay() {
