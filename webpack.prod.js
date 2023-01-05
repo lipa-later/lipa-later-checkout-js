@@ -9,7 +9,7 @@ module.exports = merge(common, {
             'process.env': {
                 'ENV': JSON.stringify('production'),
                 'NODE_ENV': JSON.stringify('production'),
-                'BASE_URL': JSON.stringify('http://localhost:3000')
+                'BASE_URL': JSON.stringify('https://develop.d1euvomf008lqs.amplifyapp.com')
             }
         })
   ]
